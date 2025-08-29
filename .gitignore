@@ -1,0 +1,8 @@
+# Ignore all files in the omnet directory
+omnet/
+
+# Ignore all files in the omnetpp directory
+omnetpp/
+
+# Ignore all files in the omnetpp-6.2.0 directory
+omnetpp-*/
