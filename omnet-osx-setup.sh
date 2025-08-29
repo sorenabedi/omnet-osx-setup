@@ -43,7 +43,12 @@ fi
 yellow "➡️ Step 1: Downloading OMNeT++ source code..."
 if [ ! -f "${OMNET_TARGZ}" ]; then
     green "File ${OMNET_TARGZ} not found. Downloading from ${OMNET_URL}..."
-    curl -L -o "${OMNET_TARGZ}" "${OMNET_URL}"
+    # use aria2c to download the file if not, use curl as fallback
+    if command -v aria2c &> /dev/null; then
+        aria2c -x 16 -o "${OMNET_TARGZ}" "${OMNET_URL}"
+    else
+        curl -L -o "${OMNET_TARGZ}" "${OMNET_URL}"
+    fi
 else
     green "✅ Source archive ${OMNET_TARGZ} already exists."
 fi
