@@ -10,6 +10,8 @@ A comprehensive, automated installation script for OMNeT++ 6.2.0 on macOS system
 - **Parallel Compilation**: Utilizes all available CPU cores for faster builds
 - **Automatic Patching**: Applies necessary patches to Makefile.inc for compatibility
 - **Environment Isolation**: Creates dedicated conda environment to prevent system conflicts
+- **Smart Download**: Automatically detects existing downloads and skips re-downloading
+- **Clean Build**: Removes previous installations for fresh builds
 
 ## 📋 Prerequisites
 
@@ -34,6 +36,7 @@ A comprehensive, automated installation script for OMNeT++ 6.2.0 on macOS system
 The installer automatically downloads the official OMNeT++ 6.2.0 release for macOS ARM64:
 
 - **Automatic Download**: The script downloads `omnetpp-6.2.0-macos-aarch64.tgz` from GitHub releases
+- **Enhanced Download**: Uses aria2c for faster downloads with 16 parallel connections (falls back to curl if aria2c not available)
 - **Local Installation**: If you already have the source archive, place it in the same directory as the script
 - **Manual Download**: You can manually download from [OMNeT++ Releases](https://github.com/omnetpp/omnetpp/releases)
 
@@ -240,6 +243,8 @@ If you encounter library loading errors:
 - [OMNeT++ User Manual](https://doc.omnetpp.org/omnetpp/manual/)
 - [OMNeT++ API Reference](https://doc.omnetpp.org/omnetpp/api/)
 - [OMNeT++ Community](https://groups.google.com/g/omnetpp)
+- [OMNeT++ GitHub Repository](https://github.com/omnetpp/omnetpp)
+- [OMNeT++ Installation Guide](https://doc.omnetpp.org/omnetpp/InstallGuide.pdf)
 
 ## 🤝 Contributing
 
@@ -271,6 +276,16 @@ If you encounter issues or have questions:
 2. Search existing [issues](../../issues)
 3. Create a new issue with detailed information about your problem
 4. Include your system information and error messages
+
+### System Information to Include
+
+When reporting issues, please include:
+
+- macOS version (e.g., macOS 14.0)
+- Processor type (M1, M2, M3, or Intel)
+- Mamba version (`mamba --version`)
+- Error messages and logs
+- Steps to reproduce the issue
 
 ---
 

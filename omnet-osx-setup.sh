@@ -79,10 +79,10 @@ MAMBA_DEPS=(
     "pandas"
     "matplotlib"
     "swig"
+    "llvm"
     "openscenegraph" # For 3D visualization
 )
 mamba create --name "${ENV_NAME}" -c conda-forge -y "${MAMBA_DEPS[@]}"
-mamba run -n "${ENV_NAME}" pip install -y llvm
 green "✅ Mamba environment '${ENV_NAME}' created successfully."
 
 # Step 3: Unpack and Prepare Source Directory
