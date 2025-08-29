@@ -18,7 +18,7 @@ PYTHON_VERSION="3.11"
 # Derived names
 OMNET_DIR="omnetpp-${OMNET_VERSION}"
 OMNET_TARGZ="${OMNET_DIR}-macos-aarch64.tgz"
-OMNET_URL="https://github.com/omnetpp/omnetpp/releases/download/${OMNET_DIR}/${OMNET_VERSION}-macos-aarch64.tgz"
+OMNET_URL="https://github.com/omnetpp/omnetpp/releases/download/${OMNET_DIR}/${OMNET_DIR}-macos-aarch64.tgz"
 
 # --- Helper Functions for Colored Output ---
 cecho() {
