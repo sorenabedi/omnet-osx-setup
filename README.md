@@ -29,6 +29,14 @@ A comprehensive, automated installation script for OMNeT++ 6.2.0 on macOS system
 
 ## 🛠️ Installation
 
+### Download Options
+
+The installer automatically downloads the official OMNeT++ 6.2.0 release for macOS ARM64:
+
+- **Automatic Download**: The script downloads `omnetpp-6.2.0-macos-aarch64.tgz` from GitHub releases
+- **Local Installation**: If you already have the source archive, place it in the same directory as the script
+- **Manual Download**: You can manually download from [OMNeT++ Releases](https://github.com/omnetpp/omnetpp/releases)
+
 ### Quick Start
 
 ```bash
@@ -49,6 +57,8 @@ The script performs the following steps automatically:
 
 1. **Prerequisite Check**: Verifies Mamba is installed
 2. **Source Download**: Downloads OMNeT++ 6.2.0 source code (if not present)
+   - **Download File**: `omnetpp-6.2.0-macos-aarch64.tgz` (ARM64 optimized)
+   - **Source URL**: GitHub releases with macOS ARM64 specific build
 3. **Environment Setup**: Creates dedicated conda environment with all dependencies
 4. **Source Preparation**: Extracts and prepares source directory
 5. **Configuration**: Configures build with proper compiler and library paths
@@ -96,12 +106,13 @@ The installer automatically installs the following dependencies in the conda env
 ```
 omnet-installer/
 ├── omnet-osx-setup.sh          # Main installation script
-├── README.md               # This file
-└── omnetpp-6.2.0/         # OMNeT++ source directory (created during installation)
-    ├── samples/            # Sample simulations
-    ├── src/                # Source code
-    ├── setenv              # Environment setup script
-    └── Makefile.inc        # Build configuration
+├── README.md                    # This file
+├── omnetpp-6.2.0-macos-aarch64.tgz  # Downloaded source archive (if present)
+└── omnetpp-6.2.0/             # OMNeT++ source directory (created during installation)
+    ├── samples/                # Sample simulations
+    ├── src/                    # Source code
+    ├── setenv                  # Environment setup script
+    └── Makefile.inc            # Build configuration
 ```
 
 ## 🚀 Usage
@@ -188,8 +199,18 @@ If compilation fails, try these steps:
    ```
 
 3. **Verify dependencies**:
+
    ```bash
    mamba list | grep -E "(qt|libxml2|zlib|bison|flex)"
+   ```
+
+4. **Check source archive**:
+   ```bash
+   # Verify the downloaded file exists and is not corrupted
+   ls -la omnetpp-6.2.0-macos-aarch64.tgz
+   # If corrupted, remove and re-run the installer
+   rm omnetpp-6.2.0-macos-aarch64.tgz
+   ./omnet-osx-setup.sh
    ```
 
 #### Runtime Library Issues

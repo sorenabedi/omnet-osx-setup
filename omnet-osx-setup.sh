@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ==============================================================================
-# OMNeT++ 6.0.2 Installation Script for macOS with Mamba/Conda
+# OMNeT++ 6.2.0 Installation Script for macOS with Mamba/Conda
 #
 # This script automates the download, configuration, and compilation of OMNeT++.
 # It creates a dedicated conda environment to manage all dependencies,
@@ -17,8 +17,8 @@ PYTHON_VERSION="3.11"
 
 # Derived names
 OMNET_DIR="omnetpp-${OMNET_VERSION}"
-OMNET_TARGZ="${OMNET_DIR}-macos.tgz"
-OMNET_URL="https://github.com/omnetpp/omnetpp/releases/download/omnetpp-${OMNET_VERSION}/${OMNET_TARGZ}"
+OMNET_TARGZ="${OMNET_DIR}-macos-aarch64.tgz"
+OMNET_URL="https://github.com/omnetpp/omnetpp/releases/download/${OMNET_VERSION}/${OMNET_VERSION}-macos-aarch64.tgz"
 
 # --- Helper Functions for Colored Output ---
 cecho() {
@@ -43,7 +43,7 @@ fi
 yellow "➡️ Step 1: Downloading OMNeT++ source code..."
 if [ ! -f "${OMNET_TARGZ}" ]; then
     green "File ${OMNET_TARGZ} not found. Downloading from ${OMNET_URL}..."
-    wget "${OMNET_URL}"
+    curl -L -o "${OMNET_TARGZ}" "${OMNET_URL}"
 else
     green "✅ Source archive ${OMNET_TARGZ} already exists."
 fi
@@ -74,10 +74,10 @@ MAMBA_DEPS=(
     "pandas"
     "matplotlib"
     "swig"
-    "llvm"
     "openscenegraph" # For 3D visualization
 )
 mamba create --name "${ENV_NAME}" -c conda-forge -y "${MAMBA_DEPS[@]}"
+mamba run -n "${ENV_NAME}" pip install -y llvm
 green "✅ Mamba environment '${ENV_NAME}' created successfully."
 
 # Step 3: Unpack and Prepare Source Directory
@@ -127,7 +127,7 @@ CONFIGURE_COMMAND="./configure \
     WITH_OSG_PATH=\"\$CONDA_PREFIX\""
 
 # Use `mamba run` to execute the command within the context of our environment
-mamba run -n "${ENV_NAME}" bash -c "${CONFIGURE_COMMAND}"
+mamba run -n ${ENV_NAME} bash -c "${CONFIGURE_COMMAND}"
 green "✅ Configuration complete."
 
 # Step 5: Patch Makefile.inc
@@ -153,7 +153,7 @@ N_CORES=$(sysctl -n hw.ncpu)
 green "Using ${N_CORES} cores for compilation."
 
 # Again, use `mamba run` to ensure the 'make' command has the correct environment
-mamba run -n ${ENV_NAME} make -j${N_CORES}
+mamba run -n "${ENV_NAME}" make -j"${N_CORES}"
 
 green "✅ OMNeT++ compiled successfully!"
 
