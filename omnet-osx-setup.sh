@@ -79,10 +79,10 @@ MAMBA_DEPS=(
     "pandas"
     "matplotlib"
     "swig"
-    "llvm"
     "openscenegraph" # For 3D visualization
 )
 mamba create --name "${ENV_NAME}" -c conda-forge -y "${MAMBA_DEPS[@]}"
+mamba run -n "${ENV_NAME}" pip install --no-input llvm
 green "✅ Mamba environment '${ENV_NAME}' created successfully."
 
 # Step 3: Unpack and Prepare Source Directory
@@ -123,13 +123,7 @@ green "✅ Environment script sourced successfully."
 # - LDFLAGS: Points to the library directories and, crucially, adds a runtime
 #   path (rpath) so the compiled binaries know where to find their .dylib
 #   dependencies at runtime. This avoids DYLD_LIBRARY_PATH issues.
-CONFIGURE_COMMAND="./configure \
-    CC=clang \
-    CXX=clang++ \
-    CPPFLAGS=\"-I\$CONDA_PREFIX/include\" \
-    LDFLAGS=\"-L\$CONDA_PREFIX/lib -Wl,-rpath,\$CONDA_PREFIX/lib\" \
-    WITH_QT_PATH=\"\$CONDA_PREFIX\" \
-    WITH_OSG_PATH=\"\$CONDA_PREFIX\""
+CONFIGURE_COMMAND="./configure CC=clang CXX=clang++ CPPFLAGS=\"-I\$CONDA_PREFIX/include\" LDFLAGS=\"-L\$CONDA_PREFIX/lib -Wl,-rpath,\$CONDA_PREFIX/lib\" WITH_QT_PATH=\"\$CONDA_PREFIX\" WITH_OSG_PATH=\"\$CONDA_PREFIX\" WITH_OSG=no"
 
 # Use `mamba run` to execute the command within the context of our environment
 mamba run -n ${ENV_NAME} bash -c "${CONFIGURE_COMMAND}"
